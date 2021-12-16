@@ -1,14 +1,15 @@
 import '../index.css';
 import Button from './button';
 
-const Header = ({ title }) => {
-	const onClickButton = () => {
-		console.log('clicked');
-	};
+const Header = ({ onShow, changeBtn }) => {
 	return (
 		<header className='header'>
-			<h1>{title}</h1>
-			<Button text='add' color={'green'} onClick={onClickButton} />
+			<h1>Task Tracker</h1>
+			<Button
+				text={changeBtn ? 'Hide' : 'Add'}
+				color={changeBtn ? 'red' : 'green'}
+				onClick={onShow}
+			/>
 		</header>
 	);
 };
