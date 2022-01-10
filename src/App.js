@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Header from './components/Header';
 import Tasks from './components/tasks';
 import AddTask from './components/addTask';
+import Footer from './components/footer';
+import About from './components/about';
 
 const App = () => {
     const [showAddTask, setShowAddTask] = useState(false);
@@ -77,22 +80,37 @@ const App = () => {
     };
 
     return (
-        <div className='container'>
-            <Header
-                onShow={() => setShowAddTask(!showAddTask)}
-                changeBtn={showAddTask}
-            />
-            {showAddTask && <AddTask onAddTask={onAddTask} />}
-            {tasks.length > 0 ? (
-                <Tasks
-                    tasks={tasks}
-                    onDelete={deleteTask}
-                    onToggle={onToggleReminder}
+        <BrowserRouter>
+            <div className='container'>
+                <Header
+                    onShow={() => setShowAddTask(!showAddTask)}
+                    changeBtn={showAddTask}
                 />
-            ) : (
-                'No task to show'
-            )}
-        </div>
+                <Routes>
+                    <Route
+                        path='/'
+                        element={
+                            <>
+                                {showAddTask && (
+                                    <AddTask onAddTask={onAddTask} />
+                                )}
+                                {tasks.length > 0 ? (
+                                    <Tasks
+                                        tasks={tasks}
+                                        onDelete={deleteTask}
+                                        onToggle={onToggleReminder}
+                                    />
+                                ) : (
+                                    'No task to show'
+                                )}
+                            </>
+                        }
+                    />
+                    <Route path='/about' element={<About />} />
+                </Routes>
+                <Footer />
+            </div>
+        </BrowserRouter>
     );
 };
 
